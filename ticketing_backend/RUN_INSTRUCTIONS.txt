@@ -1,0 +1,32 @@
+# Running the Ticketing FastAPI Backend
+
+To start the FastAPI server for the anonymous ticketing system backend, use the following instructions:
+
+## From the ticketing_backend directory:
+
+The FastAPI app is located at: src/api/main.py
+
+**To run with Uvicorn (recommended for development):**
+```bash
+cd ticketing_backend
+uvicorn src.api.main:app --reload
+```
+- This will start the server at http://127.0.0.1:8000/.
+
+**To run with Gunicorn (for production, with UVicorn worker):**
+```bash
+cd ticketing_backend
+gunicorn src.api.main:app -k uvicorn.workers.UvicornWorker
+```
+
+### Notes:
+- Do NOT use `main:app`, it MUST be `src.api.main:app`.
+- Make sure your current working directory is `ticketing_backend`.
+- All dependencies are listed in requirements.txt.
+
+If running from a Dockerfile or cloud runner, ensure the entrypoint/module path is exactly `src.api.main:app` and the working directory is `ticketing_backend`.
+
+---
+If you run into ImportError or "No module named main" errors, check the entrypoint string and your working directory.
+
+Database URL is controlled by the `TICKETING_DB_URL` environment variable (see main.py for details).
